@@ -7,4 +7,6 @@
     <color name="grey">#CCCCCC</color>
     <color name="grey_light">#EEEEEE</color>
     <color name="black">#000</color>
+    <color name="black_alphaCC">#CC000000</color>
+    <color name="black_alpha5">#55000000</color>
 </resources>

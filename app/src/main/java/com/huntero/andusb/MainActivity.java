@@ -135,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements UsbUIView{
     @Override
     public void setOrUpdateAdapter(List<UsbSerialDevice> devices) {
         //
-//        if (BuildConfig.DEBUG) {
-//            for (int i = 0; i < 20; i++) {
-//                devices.add(new UsbSerialDevice(i+1, "usb" + i));
-//            }
-//        }
+        if (BuildConfig.DEBUG) {
+            for (int i = 0; i < 20; i++) {
+                devices.add(new UsbSerialDevice(i+1, "usb" + i));
+            }
+        }
         //
         mTvDeviceCount.setText(getString(R.string.device_count, devices.size()));
         //

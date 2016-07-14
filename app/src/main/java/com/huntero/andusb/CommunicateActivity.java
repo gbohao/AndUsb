@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.huntero.andusb.models.UsbSerialDevice;
+import com.huntero.andusb.view.SuperDialog;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -39,6 +40,8 @@ public class CommunicateActivity extends AppCompatActivity {
     @InjectView(R.id.btn_write)
     Button mBtnWrite;
 
+    SuperDialog mDialog = null;
+
     UsbManager manager = null;
     UsbSerialDevice mUsbSerialDevice = null;
     UsbInterface usbInterface = null;
@@ -55,24 +58,31 @@ public class CommunicateActivity extends AppCompatActivity {
         Intent args = getIntent();
         mUsbSerialDevice = args.getParcelableExtra("data");
 
-
+        mDialog = new SuperDialog.Builder(this).icon(0).message("connecting ...").create();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(mUsbSerialDevice != null){
+
+        if(mUsbSerialDevice == null){
+            tips("no device");
+        }
             //连接
+            show("connecting ...");
+
             int interFace = mUsbSerialDevice.interfaceCount;
             if (interFace <= 0) {
                 Log.e(TAG, "onResume: Usb interface count is zero");
+                tips("no interface");
                 return;
             }
             usbInterface = mUsbSerialDevice.geUsbDevice().getInterface(0);
             if (usbInterface.getEndpointCount() != 2) {
                 //
                 Log.e(TAG, "onResume: Not a usb device");
+                tips("not a usb device");
                 return;
             }
             mEndpointIn = usbInterface.getEndpoint(0);
@@ -91,14 +101,31 @@ public class CommunicateActivity extends AppCompatActivity {
                 mConnection = manager.openDevice(mUsbSerialDevice.geUsbDevice());
                 if (mConnection != null && mConnection.claimInterface(usbInterface, true)) {
                     Log.i(TAG, "onResume: connected");
-
+                    show("success");
                 } else {
                     Log.e(TAG, "onResume: connect failure");
-                    //finish();
-//                    AlertDialog
+                    show("failure");
                 }
             }
+            dismiss(2000);
+
+    }
+
+    private void show(String msg) {
+        mDialog.setMessage(msg);
+        mDialog.show();
+    }
+
+    private void dismiss(long millis) {
+        if (millis <= 0) {
+            mDialog.dismiss();
+        } else {
+            mDialog.dismissAfter(millis);
         }
+    }
+    private void tips(String msg) {
+        mDialog.setMessage(msg);
+        mDialog.dismissAfter(2000);
     }
 
     @Override
