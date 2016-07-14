@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">AndUsb</string>
+    <string name="device_count">共%1$d台设备</string>
+    <string name="device_item_name">%1$d-%2$s(%3$d:%4$d)</string>
+    <string name="device_item_name_sub">%1$s:%2$s</string>
+</resources>

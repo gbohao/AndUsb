@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- U盘 -->
+    <usb-device vendor-id="2352" product-id="25925"/>
+    <!-- 鼠标 -->
+    <usb-device vendor-id="1133" product-id="49271"/>
+</resources>
